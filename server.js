@@ -4,7 +4,12 @@ var bodyParser = require('body-parser');
 var User = require('./db').User;
 var Room = require('./db').Room;
 
+
+
 var app = express();
+
+var server =require('http').createServer(app);
+var io = require('socket-io')(server);
 
 app.get('/', function (req,res) {
     res.sendFile(path.resolve('app/index.html'));
@@ -16,7 +21,7 @@ app.use(express.static(path.resolve('app')));
 /*
     1. 获取请求体对象
 */
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.post('/user/login', function (req,res) {
     var email = req.body.email;
     var user = {email};
@@ -63,7 +68,17 @@ app.post('/rooms', function (req,res) {
         }
     });
 });
-
-app.listen(8080, function () {
-    console.log('port 8080');
+app.get('/rooms/:id', function (req,res) {
+    Room.findById(req.params.id, function (err,room) {
+        if(err){
+            res.send({errno:1,errmsg:'保存出错',data:err});
+        }else{
+            res.send({errno:0,errmsg:'成功',data:room});
+        }
+    });
 });
+
+
+
+//app.listen(8080, function () { console.log('port 8080'); });
+app.listen(8080, function () { console.log('port 8080'); });
