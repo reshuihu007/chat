@@ -11,13 +11,17 @@ angular.module('chatMod').controller('RoomCtrl',function($scope,$http,$routePara
         }
     });
 
-    var socket = io.connect(`ws://${window.location.hostname}`);
+    //var socket = io.connect(`ws://${window.location.hostname}`);
+    var socket = io.connect(`ws://localhost:8080/`);
+    //var socket = io.connect(`/`);
     socket.on('message', function (msgObj) {
-        $scope.room.messages.push(msgObj);
+        //console.log(msgObj,$scope.room.messages,'onmessage');
+        $scope.room.messages.push(msgObj)
+        $scope.apply();
     });
 
     $scope.send = function () {
-        var content = $scope.content;
+        //console.log('send');
         socket.send({user:$rootScope.user,content:$scope.content});
     }
 });
@@ -30,7 +34,6 @@ angular.module('chatMod').directive('keyDown', function () {
                    scope.$eval(attrs.keyDown);
                }
            });
-           //element.keydown(function () { });
        }
    }
 });

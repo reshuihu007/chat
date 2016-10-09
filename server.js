@@ -4,8 +4,6 @@ var bodyParser = require('body-parser');
 var User = require('./db').User;
 var Room = require('./db').Room;
 
-
-
 var app = express();
 
 var server =require('http').createServer(app);
@@ -23,19 +21,21 @@ app.use(express.static(path.resolve('app')));
 */
 app.use(bodyParser.json());
 app.post('/user/login', function (req,res) {
-    var email = req.body.email;
+    /*var email = req.body.email;
     var user = {email};
-    console.log(req.body,email,user);
-    User.findOne({email},function(err,doc){
+    console.log(req.body,email,user);*/
+    var uu = req.body;
+
+    User.findOne(uu,function(err,doc){
         if(err){
             res.send({errno:1,errmsg:'查询出错',data:err});
         }else {
             if(doc){
                 res.send({errno:0,errmsg:'成功',data:doc});
             }else{
-                user.avater = 'https://secure.gravatar.com/avatar/email';
+                uu.avater = 'https://secure.gravatar.com/avatar/email';
                 //保存此用户之后得到一个保存之后的文档_id;
-                User.create(user, function (err2,doc2) {
+                User.create(uu, function (err2,doc2) {
                     if(err2){
                         res.send({errno:1,errmsg:'增加房间出错',data:err2});
                     }else{
@@ -78,12 +78,11 @@ app.get('/rooms/:id', function (req,res) {
     });
 });
 
-
 io.on('connection', function (socket) {
     socket.on('message', function (msgObj) {
         msgObj.createAt = new Date();
-
-        socket.emit(msgObj);
+        //console.log(msgObj,'server');
+        io.emit('message',msgObj);
     });
 });
 
