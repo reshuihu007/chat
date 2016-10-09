@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="../public/lib/bootstrap/dist/css/bootstrap.css">
+    <!--<link rel="stylesheet" href="../public/lib/bootstrap/dist/css/bootstrap.css">-->
 </head>
 <body>
     <div class="container">
@@ -14,8 +14,10 @@
                     <div class="navbar-brand">珠峰聊天室</div>
                 </div>
                 <div>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="">头像:用户名</a></li>
+                    <ul class="nav navbar-nav navbar-right" ng-show="user">
+                        <!--<li><a href="">头像:用户名</a></li>-->
+                        <!--<li><a href="">{{user.email}}{{user.avatar}}</a></li>-->
+                        <li><a href=""><img width="32px" height="32px" ng-src="{{user.avater}}" alt="">{{user.email}}</a></li>
                     </ul>
                 </div>
             </div>

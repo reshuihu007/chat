@@ -12,3 +12,4 @@ angular.module('chatMod',['ngRoute']).config(function ($routeProvider) {
        redirectTo:'/'
    })
 });
+
