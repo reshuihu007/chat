@@ -1,4 +1,4 @@
-angular.module('chatMod').controller('RoomsCtrl',function($scope,$http,$rootScope){
+angular.module('chatMod').controller('RoomsCtrl',function($scope,$http,$rootScope,$location){
     $scope.rooms = $scope._rooms = [];
     $http({
         url:'/rooms',
@@ -37,19 +37,8 @@ angular.module('chatMod').controller('RoomsCtrl',function($scope,$http,$rootScop
     }
     //进入房间聊天室
     $scope.roomIn= function (_id) {
-        $http({
-            url:'/room',
-            method:'POST',
-
-        }).success(function (result) {
-            if(result.errno == 0){
-                //保存成功之后的对象保存到数组对象之中。
-                $scope._rooms.push(result.data);
-                //重新过滤下个给rooms重新赋值，
-                $scope.filter();
-            }else{
-                $rootScope.errorMsg = result.msg;
-            }
-        });
+        $location.path('/rooms/'+_id);
     }
+
+
 });

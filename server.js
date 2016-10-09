@@ -9,7 +9,7 @@ var Room = require('./db').Room;
 var app = express();
 
 var server =require('http').createServer(app);
-var io = require('socket-io')(server);
+var io = require('socket.io')(server);
 
 app.get('/', function (req,res) {
     res.sendFile(path.resolve('app/index.html'));
@@ -79,6 +79,13 @@ app.get('/rooms/:id', function (req,res) {
 });
 
 
+io.on('connection', function (socket) {
+    socket.on('message', function (msgObj) {
+        msgObj.createAt = new Date();
+
+        socket.emit(msgObj);
+    });
+});
 
 //app.listen(8080, function () { console.log('port 8080'); });
-app.listen(8080, function () { console.log('port 8080'); });
+server.listen(8080, function () { console.log('port 8080'); });

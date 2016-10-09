@@ -21,10 +21,12 @@
                 </div>
             </div>
         </nav>
+        <div ng-if="errorMsg" class="alert">{{errorMsg}}</div>
         <div class="container" ng-view></div>
     </div>
 </body>
 </html>
+<script src="/socket.io/socket.io.js"></script>
 <script src="/lib/jquery/dist/jquery.js"></script>
 <script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
 <script src="/lib/angular/angular.js"></script>
@@ -33,3 +35,12 @@
 <script src="controller/LoginCtrl.js"></script>
 <script src="controller/RoomCtrl.js"></script>
 <script src="controller/RoomsCtrl.js"></script>
+<script>
+    window.onload = function () {
+        var socket = io.connect('ws://localhost:8080/');
+        socket.on('connect',function(){
+            console.log('连接成功');
+            socket.send('getAllMessages');
+        });
+    }
+</script>
