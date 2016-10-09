@@ -11,7 +11,7 @@ angular.module('chatMod').controller('RoomCtrl',function($scope,$http,$routePara
         }
     });
 
-    var socket = io.connect('ws://47.88.148.75:8080');
+    var socket = io.connect(`ws://${window.location.hostname}`);
     socket.on('message', function (msgObj) {
         $scope.room.messages.push(msgObj);
     });
@@ -20,15 +20,15 @@ angular.module('chatMod').controller('RoomCtrl',function($scope,$http,$routePara
         var content = $scope.content;
         socket.send({user:$rootScope.user,content:$scope.content});
     }
-
 });
-
 
 angular.module('chatMod').directive('keyDown', function () {
    return{
        link: function (scope,element,attrs) {
-           element.on('keydown', function (event) {
-
+           element.keydown(function(event){
+               if(event.keyCode == 13){
+                   scope.$eval(attrs.keyDown);
+               }
            });
            //element.keydown(function () { });
        }
