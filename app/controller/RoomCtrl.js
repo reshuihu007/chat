@@ -11,7 +11,7 @@ angular.module('chatMod').controller('RoomCtrl',function($scope,$http,$routePara
         }
     });
 
-    var socket = io.connect('ws://localhost:8080');
+    var socket = io.connect('ws://47.88.148.75:8080');
     socket.on('message', function (msgObj) {
         $scope.room.messages.push(msgObj);
     });
