@@ -1,1 +1,21 @@
-room
+<div class="container">
+    <div class="panel">
+        <div>
+            <div class="panel panel-heading">
+                <h3>欢迎来{{room.name}}聊天室</h3>
+            </div>
+            <div class="panel panel-body">
+                <ul class="list-group">
+                    <li ng-repeat="message in room.message track by $index ">
+                        <img ng-src="message.user.avatar" alt=""/>
+                        {{message.user.email}}
+                        {{message.content}}
+                        <span class="pull-right">{{message.createAt}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="panel panel-footer"></div>
+        </div>
+
+    </div>
+</div>

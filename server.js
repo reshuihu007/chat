@@ -6,7 +6,6 @@ var Room = require('./db').Room;
 
 var app = express();
 
-
 app.get('/', function (req,res) {
     res.sendFile(path.resolve('app/index.html'));
 });
@@ -20,7 +19,8 @@ app.use(express.static(path.resolve('app')));
 app.use(bodyParser.json())
 app.post('/user/login', function (req,res) {
     var email = req.body.email;
-    var user = {email}
+    var user = {email};
+    console.log(req.body,email,user);
     User.findOne({email},function(err,doc){
         if(err){
             res.send({errno:1,errmsg:'查询出错',data:err});
@@ -32,7 +32,7 @@ app.post('/user/login', function (req,res) {
                 //保存此用户之后得到一个保存之后的文档_id;
                 User.create(user, function (err2,doc2) {
                     if(err2){
-                        res.send({errno:1,errmsg:'保存出错',data:err2});
+                        res.send({errno:1,errmsg:'增加房间出错',data:err2});
                     }else{
                         res.send({errno:0,errmsg:'成功',data:doc2});
                     }
@@ -51,6 +51,19 @@ app.get('/rooms', function (req,res) {
         }
     })
 });
+
+app.post('/rooms', function (req,res) {
+    var room = req.body;
+    room.users = room.message = [];
+    Room.create(room, function (err,doc) {
+        if(err){
+            res.send({errno:1,errmsg:'保存出错',data:err});
+        }else{
+            res.send({errno:0,errmsg:'成功',data:doc});
+        }
+    });
+});
+
 app.listen(8080, function () {
     console.log('port 8080');
 });
