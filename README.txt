@@ -1,4 +1,4 @@
-https://zhufengnodejs.github.io/doc/html/node%E9%A1%B9%E7%9B%AE/%E7%8F%A0%E5%B3%B0%E8%81%8A%E5%A4%A9%E5%AE%A4.html
+﻿https://zhufengnodejs.github.io/doc/html/node%E9%A1%B9%E7%9B%AE/%E7%8F%A0%E5%B3%B0%E8%81%8A%E5%A4%A9%E5%AE%A4.html
 
 npm init -y
 
@@ -17,7 +17,7 @@ npm install express socket.io cookie-parser express-session mongoose --save
 
 mkdir 201607chat
 cd 201607chat
-初始化bower配置文件
+初始化bower配置文件    sss
 
 手工创建.bowerrc用来指定安装目录
 
